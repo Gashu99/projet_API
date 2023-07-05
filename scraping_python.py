@@ -18,19 +18,17 @@ for e in element:
     item={}
     source=e.find_element("tag name","img")
     src=source.get_attribute('data-src')
-    item["source"]=src
+   
     nom=e.find_element("css selector",".name")
-    item["nom"]=nom.text
+    item["title"]=nom.text
     prix=e.find_element("css selector",".prc")
-    item["prix"]=prix.text
+    item["price"]=prix.text
+    item["img"]=src
     if src != "" and nom.text != "" and prix.text != "" :
         data.append(item)
         
-
-
-# for d in data :
-#     print(d)
-#     print()
-
-# print(i)
+#mettre les donnees dans un fichier json
+import json 
+with open ('donnee_scaper_avec_python.json',"w") as don:
+    json.dump(data,don)
 
