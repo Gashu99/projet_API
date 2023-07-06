@@ -12,7 +12,7 @@ async function runScraping() {
   try {
     await driver.get('https://sn.coinafrique.com/categorie/ordinateurs');
 
-    let hasNextPage = true;
+    let hasNextPage = true; 
     let pageNumber = 1;
     let tab = [];
 
