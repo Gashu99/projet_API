@@ -19,3 +19,5 @@ for d in combined_data:
     i=i+1
 
 print(i)
+with open ("donnee_electronique.json","w") as file:
+    json.dump(combined_data,file)
