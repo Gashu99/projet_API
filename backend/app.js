@@ -1,5 +1,8 @@
 const { Pool } = require('pg');
+const bodyParser = require('body-parser');
 const fs = require('fs');
+
+
 
 const pool = new Pool({
   user: 'fatou',
@@ -29,60 +32,9 @@ app.use((req, res, next) => {
     next();
   });
 
-// let l=['electronique','electromenager','luminaire']
-// for (let i of l ){
-// app.get(`/${i}`, async (req, res) => {
-//     try {
-//       // Perform a database query to retrieve data from the datadk table
-//       const query = `SELECT * FROM ${i}`;
-//       const { rows } = await pool.query(query);
-  
-//       // Return the retrieved data as a JSON response
-//       res.json(rows);
-//     } catch (err) {
-//       console.error(err);
-//       res.sendStatus(500);
-//     }
-//   });  
-
-// id_all = ["id_ap", "id_e", "id_l"]
-// for (let id_selected of id_all){
-//     // Route pour récupérer les données de l'électronique en fonction de l'ID
-// app.get(`/${i}/:id`, async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     //if (){}
-
-//     // Effectuer une requête à la base de données pour récupérer les données de l'électronique
-//     const query = `SELECT * FROM ${i} WHERE ${id_selected} = $1`;
-//     const { rows } = await pool.query(query, [id]);
-
-//     // Renvoyer les données récupérées en tant que réponse JSON
-//     res.json(rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.sendStatus(500);
-//   }
-// });
-// }
-// }
-  // app.get(`/electronique/:${id}`, async (req, res) => {
-  //   try {
-  //     // Perform a database query to retrieve data from the datadk table
-  //     const query = `SELECT * FROM electronique where id_e= ${id}`;
-  //     const { rows } = await pool.query(query);
-  
-  //     // Return the retrieved data as a JSON response
-  //     res.json(rows);
-  //   } catch (err) {
-  //     console.error(err);
-  //     res.sendStatus(500);
-  //   }
-  // });  
 
 
-
-  const l = ['electronique', 'electromenager', 'luminaire'];
+const l = ['electronique', 'electromenager', 'luminaire'];
 
 const idColumns = {
   electronique: "id_e",
@@ -121,6 +73,37 @@ for (let i of l) {
 
 
 
+app.use(express.json()); // Pour analyser les données JSON
+app.use(express.urlencoded({ extended: true })); // Pour analyser les données du formulaire
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+const data = {
+  nom: "ordinateur",
+  prix: "240000 FCFA",
+  image: "image"
+};
+
+// Route POST pour la table "electronique"
+app.post('/electronique', async (req, res) => {
+  try {
+    const { nom, prix, image } = req.body;
+
+    const query = `INSERT INTO electronique (nom, prix, image) VALUES ($1, $2, $3)`;
+    const values = [nom, prix, image];
+
+    await pool.query(query, values);
+
+    res.json({ message: 'Données insérées avec succès dans la table "electronique"' });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 
 
 app.use((req, res) => {
