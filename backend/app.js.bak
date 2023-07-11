@@ -34,6 +34,9 @@ app.use((req, res, next) => {
     next();
   });
 
+
+
+
 const l = ['electronique', 'electromenager', 'luminaire'];
 
 const idColumns = {
@@ -71,6 +74,77 @@ for (let i of l) {
   });
 }
 
+// good requests, save'm
+
+// app.post('/electronique', async (req, res) => {
+//   try {
+//     const {nom, prix, image} = req.body;
+//     const query = 'INSERT INTO electronique (nom, prix, image) VALUES ($1, $2, $3)';
+//     const values = [nom, prix, image];
+//     await pool.query(query, values);
+//     res.json({ message: 'New item created successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
+// 
+// app.put('/electronique/:id', async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const updatedFields = req.body;
+//     const updates = Object.keys(updatedFields).map((key) => `${key} = '${updatedFields[key]}'`).join(', ');
+// 
+//     const query = `UPDATE electronique SET ${updates} WHERE id_e = $1`;
+//     const values = [id];
+// 
+//     await pool.query(query, values);
+// 
+//     res.json({ message: 'Item updated successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
+// 
+// app.delete('/electronique/:id', async (req, res) => {
+//   try {
+//     const id = req.params.id;
+// 
+//     const query = 'DELETE FROM electronique WHERE id_e = $1';
+//     const values = [id];
+// 
+//     await pool.query(query, values);
+// 
+//     res.json({ message: 'Record deleted successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
+
+// good requests, !
+
+// ... existing code ...
+
+// POST request for creating a new item
+
+// cette requete post nemarche que pour electronique car elle a les champs de la requete post 
+
+// app.post('/:category', async (req, res) => {
+//   const category = req.params.category;
+//   try {
+//     const { nom, prix, image } = req.body;
+//     const query = `INSERT INTO ${category} (nom, prix, image) VALUES ($1, $2, $3)`;
+//     const values = [nom, prix, image];
+//     await pool.query(query, values);
+//     res.json({ message: 'New item created successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
+
 app.post('/:category', async (req, res) => {
   const category = req.params.category;
   try {
@@ -104,6 +178,28 @@ app.post('/:category', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+// 
+// // PUT request for updating an item
+// app.put('/:category/:id', async (req, res) => {
+//   const category = req.params.category;
+//   const idColumn = idColumns[category];
+//   try {
+//     const id = req.params.id;
+//     const updatedFields = req.body;
+//     const updates = Object.keys(updatedFields).map((key) => `${key} = '${updatedFields[key]}'`).join(', ');
+
+//     const query = `UPDATE ${category} SET ${updates} WHERE ${idColumn} = $1`;
+//     const values = [id];
+
+//     await pool.query(query, values);
+
+//     res.json({ message: 'Item updated successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
 
 app.put('/:category/:id', async (req, res) => {
   const category = req.params.category;
@@ -162,9 +258,17 @@ app.delete('/:category/:id', async (req, res) => {
   }
 });
 
+// ... existing code ...
+
+
+
+
 app.use((req, res) => {
 
     res.json({ message: 'Votre requête a bien été reçue !' }); 
-});
+ });
+ 
+
+
 
 module.exports = app;
