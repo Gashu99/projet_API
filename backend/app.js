@@ -1,6 +1,9 @@
 const { Pool } = require('pg');
+const bodyParser = require('body-parser');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+
+
 
 
 
@@ -34,7 +37,60 @@ app.use((req, res, next) => {
     next();
   });
 
-const l = ['electronique', 'electromenager', 'luminaire'];
+// let l=['electronique','electromenager','luminaire']
+// for (let i of l ){
+// app.get(`/${i}`, async (req, res) => {
+//     try {
+//       // Perform a database query to retrieve data from the datadk table
+//       const query = `SELECT * FROM ${i}`;
+//       const { rows } = await pool.query(query);
+  
+//       // Return the retrieved data as a JSON response
+//       res.json(rows);
+//     } catch (err) {
+//       console.error(err);
+//       res.sendStatus(500);
+//     }
+//   });  
+
+// id_all = ["id_ap", "id_e", "id_l"]
+// for (let id_selected of id_all){
+//     // Route pour récupérer les données de l'électronique en fonction de l'ID
+// app.get(`/${i}/:id`, async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     //if (){}
+
+//     // Effectuer une requête à la base de données pour récupérer les données de l'électronique
+//     const query = `SELECT * FROM ${i} WHERE ${id_selected} = $1`;
+//     const { rows } = await pool.query(query, [id]);
+
+//     // Renvoyer les données récupérées en tant que réponse JSON
+//     res.json(rows);
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
+// }
+// }
+  // app.get(`/electronique/:${id}`, async (req, res) => {
+  //   try {
+  //     // Perform a database query to retrieve data from the datadk table
+  //     const query = `SELECT * FROM electronique where id_e= ${id}`;
+  //     const { rows } = await pool.query(query);
+  
+  //     // Return the retrieved data as a JSON response
+  //     res.json(rows);
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.sendStatus(500);
+  //   }
+  // });  
+
+
+
+  const l = ['electronique', 'electromenager', 'luminaire'];
 
 const idColumns = {
   electronique: "id_e",
@@ -71,76 +127,8 @@ for (let i of l) {
   });
 }
 
-app.post('/:category', async (req, res) => {
-  const category = req.params.category;
-  try {
-    let query = '';
-    let values = [];
-    
-    switch (category) {
-      case 'electronique':
-        const { nom, prix, imagel } = req.body;
-        query = 'INSERT INTO electronique (nom, prix, image) VALUES ($1, $2, $3)';
-        values = [nom, prix, imagel];
-        break;
-      case 'electromenager':
-        const { nom_ap, emplacement, prix_ap, img_ap } = req.body;
-        query = 'INSERT INTO electromenager (nom_ap, emplacement, prix_ap, img_ap) VALUES ($1, $2, $3, $4)';
-        values = [nom_ap, emplacement, prix_ap, img_ap];
-        break;
-      case 'luminaire':
-        const { nom_l, prix_l, description, image } = req.body;
-        query = 'INSERT INTO luminaire (nom_l, prix_l, description, image) VALUES ($1, $2, $3, $4)';
-        values = [nom_l, prix_l, description, image];
-        break;
-      default:
-        throw new Error(`Invalid category: ${category}`);
-    }
 
-    await pool.query(query, values);
-    res.json({ message: 'New item created successfully' });
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
 
-app.put('/:category/:id', async (req, res) => {
-  const category = req.params.category;
-  const idColumn = idColumns[category];
-  try {
-    const id = req.params.id;
-    let query = '';
-    let values = [];
-    
-    switch (category) {
-      case 'electronique':
-        const { nom, prix, imagel } = req.body;
-        query = `UPDATE electronique SET nom = $1, prix = $2, image = $3 WHERE ${idColumn} = $4`;
-        values = [nom, prix, imagel, id];
-        break;
-      case 'electromenager':
-        const { nom_ap, emplacement, prix_ap, img_ap } = req.body;
-        query = `UPDATE electromenager SET nom_ap = $1, emplacement = $2, prix_ap = $3, img_ap = $4 WHERE ${idColumn} = $5`;
-        values = [nom_ap, emplacement, prix_ap, img_ap, id];
-        break;
-      case 'luminaire':
-        const { nom_l, prix_l, description, image } = req.body;
-        query = `UPDATE luminaire SET nom_l = $1, prix_l = $2, description = $3, image = $4 WHERE ${idColumn} = $5`;
-        values = [nom_l, prix_l, description, image, id];
-        break;
-      default:
-        throw new Error(`Invalid category: ${category}`);
-    }
-
-    await pool.query(query, values);
-
-    res.json({ message: 'Item updated successfully' });
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
 
 
 // DELETE request for deleting an item
