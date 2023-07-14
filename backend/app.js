@@ -1,8 +1,8 @@
 const { Pool } = require('pg');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const bodyParser = require('body-parser');
-
+const path = require ('path')
+// const bodyParser = require('body-parser');
 
 
 
@@ -36,58 +36,6 @@ app.use((req, res, next) => {
     console.log(` `)
     next();
   });
-
-// let l=['electronique','electromenager','luminaire']
-// for (let i of l ){
-// app.get(`/${i}`, async (req, res) => {
-//     try {
-//       // Perform a database query to retrieve data from the datadk table
-//       const query = `SELECT * FROM ${i}`;
-//       const { rows } = await pool.query(query);
-  
-//       // Return the retrieved data as a JSON response
-//       res.json(rows);
-//     } catch (err) {
-//       console.error(err);
-//       res.sendStatus(500);
-//     }
-//   });  
-
-// id_all = ["id_ap", "id_e", "id_l"]
-// for (let id_selected of id_all){
-//     // Route pour récupérer les données de l'électronique en fonction de l'ID
-// app.get(`/${i}/:id`, async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     //if (){}
-
-//     // Effectuer une requête à la base de données pour récupérer les données de l'électronique
-//     const query = `SELECT * FROM ${i} WHERE ${id_selected} = $1`;
-//     const { rows } = await pool.query(query, [id]);
-
-//     // Renvoyer les données récupérées en tant que réponse JSON
-//     res.json(rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.sendStatus(500);
-//   }
-// });
-// }
-// }
-  // app.get(`/electronique/:${id}`, async (req, res) => {
-  //   try {
-  //     // Perform a database query to retrieve data from the datadk table
-  //     const query = `SELECT * FROM electronique where id_e= ${id}`;
-  //     const { rows } = await pool.query(query);
-  
-  //     // Return the retrieved data as a JSON response
-  //     res.json(rows);
-  //   } catch (err) {
-  //     console.error(err);
-  //     res.sendStatus(500);
-  //   }
-  // });  
-
 
 
   const l = ['electronique', 'electromenager', 'luminaire'];
@@ -129,6 +77,12 @@ for (let i of l) {
 
 
 
+// Configurer EJS comme moteur de template
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Configurer le dossier des fichiers statiques
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // DELETE request for deleting an item
