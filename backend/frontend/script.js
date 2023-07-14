@@ -10,7 +10,6 @@ async function getElectroniqueData() {
       print(data)
   
       const dataList = document.querySelector('.box-container');
-     
 
       data.forEach(item => {
         const listItem = document.querySelector('.box');
@@ -24,9 +23,6 @@ async function getElectroniqueData() {
         pr.style.fontWeight="19px"
         pr.innerHtml=''
         pr.innerText=item.prix
-        
-        
-        
         dataList.appendChild(listItem);
       });
     } catch (error) {
@@ -36,6 +32,46 @@ async function getElectroniqueData() {
   
   // Appel de la fonction pour récupérer et afficher les données de la catégorie "électronique"
   document.addEventListener('DOMContentLoaded', getElectroniqueData);
+
+
+  async function getElectromenagerData() {
+    try {
+      const response = await fetch('http://localhost:3000/electromenager');
+      const data = await response.json();
+      print(data)
+  
+      const dataelectromenager=document.querySelector('.swiper featured-slider swiper-initialized swiper-horizontal swiper-pointer-events')
+     
+
+      data.forEach(item => {
+        // Sélecteurs des éléments dans la galerie
+          const galleryContainer = document.getElementById("featured");
+          const slideSelectors = galleryContainer.querySelector(".swiper-slide");
+          const nameSelectors = galleryContainer.querySelector("h3");
+          const priceAmountSelectors = galleryContainer.querySelector(".price .amount");
+const priceCutSelectors = galleryContainer.querySelector(".price .cut");
+const priceOfferSelectors = galleryContainer.querySelector(".price .offer");
+const starsSelectors = galleryContainer.querySelector(".stars span");
+
+
+// Remplir les données dans les sélecteurs correspondants
+  nameSelectors.textContent = data.nom_ap;
+  priceAmountSelectors.textContent = data.prix_ap;
+  priceCutSelectors.textContent = product.priceCut;
+  priceOfferSelectors.textContent = product.priceOffer;
+  starsSelectors.textContent = product.stars;
+  slideSelectors.querySelector(".image img").src = data.img_ap;
+
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', getElectromenagerData);
+
+  
+
   
 
   let searchForm = document.querySelector('.search-form');
