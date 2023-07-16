@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <h1 class="titre">Dall Diamm Electromenager</h1>
+  <div id="add-record-form">
+    <h2>Add New Record</h2>
+    <form id="new-record-form">
+      <label for="new-name">Name:</label>
+      <input type="text" id="new-name" name="new-name" required>
+
+      <label for="new-location">Location:</label>
+      <input type="text" id="new-location" name="new-location" required>
+
+      <label for="new-price">Price:</label>
+      <input type="text" id="new-price" name="new-price" required>
+
+      <label for="new-image-url">Image URL:</label>
+      <input type="url" id="new-image-url" name="new-image-url" required>
+
+      <button type="submit">Add Record</button>
+    </form>
+  </div>
+  <table id="json-table"></table>
+
+  <div id="popup-container" class="popup">
+    <form id="modify-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" required>
+
+      <label for="price">Price:</label>
+      <input type="text" id="price" name="price" required>
+
+      <label for="image-url">Image URL:</label>
+      <input type="url" id="image-url" name="image-url" required>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+
+  <!-- Form for posting new records -->
+ 
+
+  <script src="script.js"></script>
+</body>
+</html>
