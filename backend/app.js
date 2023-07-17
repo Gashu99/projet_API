@@ -75,6 +75,16 @@ for (let i of l) {
   });
 }
 
+app.get(`/utilisateur`, async (req, res) => {
+  try {
+    const query = `SELECT * FROM utilisateur`;
+    const { rows } = await pool.query(query);
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
 
 
 // Configurer EJS comme moteur de template
