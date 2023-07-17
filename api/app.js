@@ -28,15 +28,45 @@ app.use((req, res, next) => {
     next();
   });
 
-  app.use(function(req, res, next) {
-    console.log(`new connection detected:`);
-    console.log(`IP: ${req.ip}`)
-    console.log(`URL: ${req.url}`)
-    console.log(`Method: ${req.method}`)
-    console.log(`Date: ${Date()}`)
-    console.log(` `)
-    next();
-  });
+let getRequests = 0;
+let postRequests = 0;
+let putRequests = 0;
+let deleteRequests = 0;
+
+app.use(function(req, res, next) {
+  console.log(`New connection detected:`);
+  console.log(`IP: ${req.ip}`);
+  console.log(`URL: ${req.url}`);
+  console.log(`Method: ${req.method}`);
+  console.log(`Date: ${Date()}`);
+  console.log(` `);
+
+  // Update request count based on the request method
+  switch (req.method) {
+    case 'GET':
+      getRequests++;
+      break;
+    case 'POST':
+      postRequests++;
+      break;
+    case 'PUT':
+      putRequests++;
+      break;
+    case 'DELETE':
+      deleteRequests++;
+      break;
+    default:
+      break;
+  }
+
+  // Log the request counts
+  console.log(`GET requests: ${getRequests}`);
+  console.log(`POST requests: ${postRequests}`);
+  console.log(`PUT requests: ${putRequests}`);
+  console.log(`DELETE requests: ${deleteRequests}`);
+
+  next();
+});
 
 const l = ['electronique', 'electromenager', 'luminaire'];
 
