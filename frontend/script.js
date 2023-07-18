@@ -6,7 +6,6 @@ function sortDataById(jsonData) {
   return jsonData.sort((a, b) => a.id_ap - b.id_ap);
 }
 
-
 const addRecordButton = document.getElementById('add-record-form-button')
 addRecordButton.addEventListener("mouseover", () => {
   addRecordButton.style.backgroundColor='green'
@@ -67,7 +66,7 @@ async function getData() {
         // Show the popup when the Modify button is clicked
         const popupContainer = document.getElementById("popup-container");
         popupContainer.style.display = "block";
-
+        popupContainer.style.backgroundColor = '#308cba';
         // Pre-fill the form fields with existing data
         const modifyForm = document.getElementById("modify-form");
         modifyForm.elements["name"].value = data.nom_ap;

@@ -15,7 +15,6 @@ const pool = new Pool({
 const express = require('express');
 
 const app = express();
-let i=0
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -23,18 +22,18 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    i=i+1;
-    console.log("Nombre de requêtes: ",i)
+    console.log(` `);
+    console.log(`New connection detected:`);
+    console.log(` `)
     next();
   });
-
+let i=0
 let getRequests = 0;
 let postRequests = 0;
 let putRequests = 0;
 let deleteRequests = 0;
 
 app.use(function(req, res, next) {
-  console.log(`New connection detected:`);
   console.log(`IP: ${req.ip}`);
   console.log(`URL: ${req.url}`);
   console.log(`Method: ${req.method}`);
@@ -60,10 +59,13 @@ app.use(function(req, res, next) {
   }
 
   // Log the request counts
+  i=i+1;
+  console.log("Nombre de requêtes: ",i)
   console.log(`GET requests: ${getRequests}`);
   console.log(`POST requests: ${postRequests}`);
   console.log(`PUT requests: ${putRequests}`);
   console.log(`DELETE requests: ${deleteRequests}`);
+  console.log(` `);
 
   next();
 });
@@ -78,6 +80,7 @@ const idColumns = {
 
 app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.write("Bienvenue sur Dall Diamm!\n");
   res.write("Vous pouvez visiter l'url /electronique pour les données électroniques,\n");
   res.write("l'url /electromenager pour les données électroménagers,\n");
   res.write("et l'url /luminaire pour les données luminaires\n");
