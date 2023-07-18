@@ -2,6 +2,7 @@ const { Pool } = require('pg');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require ('path')
+const jwt = require('jsonwebtoken');
 // const bodyParser = require('body-parser');
 
 
@@ -75,16 +76,51 @@ for (let i of l) {
   });
 }
 
-app.get(`/utilisateur`, async (req, res) => {
+app.post(`/utilisateur`, async (req, res) => {
   try {
-    const query = `SELECT * FROM utilisateur`;
-    const { rows } = await pool.query(query);
-    res.json(rows);
-  } catch (err) {
+    const { mail, password } = req.body;
+    const postUser = async (mail) => {
+      try {
+        const query = 'SELECT * FROM utilisateur WHERE email = $1';
+        const values = [mail];
+        const result = await pool.query(query, values);
+        const user = result.rows[0];
+        console.log(result.rows[0])
+        if (user === undefined) {
+          // L'utilisateur n'existe pas
+          return null;
+        } else {
+          return user;
+        }
+      } catch (error) {
+        throw new Error("Une erreur est survenue lors de la récupération des infos de l'utilisateur.");
+      }
+    };
+    const user = await postUser(mail);
+
+    if (user === null) {
+      res.status(403).json({ message: "Paire mail / mot de passe incorrect" });
+    } else {
+      const passwordMatch = user.mot_de_passe ;
+
+      if (passwordMatch != password) {
+        res.status(403).json({ message: "Paire mail / mot de passe incorrect" });
+      } else {
+        // Stocker les informations de session dans le token d'authentification
+        const token = jwt.sign({ full_name: user.prenom, role: user.role_id }, 'secret-key', { expiresIn: '1h' });
+
+        // Ajouter le token aux informations renvoyées
+        res.status(200).json({ message: "Info utilisateur récupéré avec succès.", user_name: user.prenom, user_role: user.role_id, token: token, user });
+      }
+    }
+  }  catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 });
+
+
+
 
 
 // Configurer EJS comme moteur de template

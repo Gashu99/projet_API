@@ -20,3 +20,11 @@ const server = http.createServer(app)
 server.listen(process.env.PORT || 3000, () => {
   console.log(`Listening forever on localhost:${process.env.PORT || 3000}`);
 });
+
+
+// config.js
+
+// Utilisez un fichier de configuration pour stocker la clé secrète
+// module.exports = {
+//   secretKey: 'fatou'
+// };
