@@ -14,7 +14,7 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/authentifiacation.js"></script>
+   
 
 </head>
 <body>
@@ -36,6 +36,7 @@
         <a href="#" class="fas fa-heart"></a>
         <a href="#" class="fas fa-shopping-cart"></a>
         <a href="con.html" id="se_connecter" class="fas fa-user"></a>
+        <a  id="se_deconnecter" class="fas fa-user" style="display: none;"></a>
     </div>
 
 </header>
@@ -47,16 +48,16 @@
 <nav class="navbar">
 
     <div class="user" >
-        <img src="images/user-img.png" alt="">
-        <h3 id="user-info">Your Name</h3>
+        <img src="images/user-img.png" id="image_user" alt="">
+        <h3 id="info_utilisateur"></h3>
     </div>
 
     <div class="links">
-        <a href="#home">home</a>
-        <a href="#products">products</a>
-        <a href="#featured">featured</a>
-        <a href="#deal">deal</a>
-        <a href="#review">review</a>
+        <a href="#" id="user_role"></a>
+        <a href="#" id="produit"></a>
+        <a href="#" id="liste"></a>
+        <a href="#"></a>
+        <a href="#"></a>
     </div>
 
     <div id="close" class="fas fa-times"></div>
@@ -141,7 +142,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -166,7 +167,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -241,7 +242,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -273,7 +274,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -298,7 +299,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -323,7 +324,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -348,7 +349,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -373,7 +374,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -411,7 +412,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -436,7 +437,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -461,7 +462,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -486,7 +487,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -511,7 +512,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -543,7 +544,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -568,7 +569,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -593,7 +594,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -618,7 +619,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -643,7 +644,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -680,7 +681,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -705,7 +706,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -730,7 +731,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -755,7 +756,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -780,7 +781,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -812,7 +813,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -837,7 +838,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -862,7 +863,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -887,7 +888,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>man's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -912,7 +913,7 @@
                         <span>( 250 reviews )</span>
                     </div>
                     <h3>woman's clothing</h3>
-                    <div class="price">$15.99 <span>$18.99</span></div>
+                    <div class="price">15.99 <span>18.99</span></div>
                     <a href="#" class="btn">add to cart</a>
                 </div>
             </div>
@@ -957,7 +958,7 @@
                     <span>( 250 reviews )</span>
                 </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora quasi nesciunt, error fuga facilis autem rerum cumque animi rem natus.</p>
-                <div class="price">$15.99 <span>$18.99</span></div>
+                <div class="price">15.99 <span>18.99</span></div>
                 <a href="#" class="btn">add to cart</a>
             </div>
         </div>
@@ -984,7 +985,7 @@
                     <span>( 250 reviews )</span>
                 </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora quasi nesciunt, error fuga facilis autem rerum cumque animi rem natus.</p>
-                <div class="price">$15.99 <span>$18.99</span></div>
+                <div class="price">15.99 <span>18.99</span></div>
                 <a href="#" class="btn">add to cart</a>
             </div>
         </div>
@@ -1011,7 +1012,7 @@
                     <span>( 250 reviews )</span>
                 </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora quasi nesciunt, error fuga facilis autem rerum cumque animi rem natus.</p>
-                <div class="price">$15.99 <span>$18.99</span></div>
+                <div class="price">15.99 <span>18.99</span></div>
                 <a href="#" class="btn">add to cart</a>
             </div>
         </div>
@@ -1222,6 +1223,8 @@
 
 <!-- custom js file link -->
 <script src="js/script.js"></script>
+<script src="js/authentifiacation.js"></script>
+<script src="js/user_info.js"></script>
 
 
 </body>
