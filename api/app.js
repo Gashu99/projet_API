@@ -150,6 +150,29 @@ app.post('/:category', async (req, res) => {
   }
 });
 
+app.post("/propositions", (req, res) => {
+    const postData = req.body;
+    // Assuming the JSON file is named "propositions.json"
+    fs.readFile("propositions.json", "utf8", (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Failed to read data." });
+        }
+
+        const posts = JSON.parse(data);
+        posts.push(postData);
+
+        fs.writeFile("propositions.json", JSON.stringify(posts, null, 2), (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: "Failed to write data." });
+            }
+
+            res.json({ message: "Data posted successfully." });
+        });
+    });
+});
+
 app.put('/:category/:id', async (req, res) => {
   const category = req.params.category;
   const idColumn = idColumns[category];
