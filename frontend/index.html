@@ -5,16 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-
-  <!--<script type="text/javascript" src="d3/d3.v2.js"></script>-->
-  <!-- <script src="http://d3js.org/d3.v2.js"></script> -->
-  <!-- Include D3.js library -->
-<!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
-
-  <!-- Note: I made good use of the sample code provided by the D3JS community and extended it to fit my needs to create this simple dashboard -->
- 
- 
 
 </head>
 <body>
@@ -22,135 +12,8 @@
   <div class="header">
     <h1 class="titre">Dall Diamm Electromenager - ADMIN</h1>
   </div>
-    
-      <div class="charts">
-        <!-- <div id="pieChart"></div>
-      <div id="barChart"></div>  
-      <div id="lineChart"></div> -->
-      <!-- <div id="priceBarChart"></div> -->
-      <!-- HTML for Bar Chart -->
-<!-- <div id="barChart"></div> -->
-
-<div id="locationBarChart"></div>
-
-      </div>
-      <script>
-        function drawPriceBarChart(prices) {
-          var margin = { top: 20, right: 30, bottom: 30, left: 40 };
-          var width = 400 - margin.left - margin.right;
-          var height = 250 - margin.top - margin.bottom;
-      
-          // Create SVG element
-          var svg = d3
-            .select("#priceBarChart")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-      
-          // Define x and y scales
-          var x = d3
-            .scaleBand()
-            .domain(prices.map((_, i) => i))
-            .range([0, width])
-            .paddingInner(0.1)
-            .paddingOuter(0.5);
-      
-          var y = d3
-            .scaleLinear()
-            .domain([0, d3.max(prices)])
-            .range([height, 0]);
-      
-          // Draw the bars
-          var bars = svg
-            .selectAll(".bar")
-            .data(prices)
-            .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", (d, i) => x(i))
-            .attr("width", x.bandwidth())
-            .attr("y", (d) => y(d))
-            .attr("height", (d) => height - y(d))
-            .attr("fill", "steelblue");
-      
-          // Add x and y axis
-          svg
-            .append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickFormat((_, i) => `Item ${i + 1}`));
-      
-          svg.append("g").call(d3.axisLeft(y));
-      
-          // Add chart title
-          svg
-            .append("text")
-            .attr("x", width / 2)
-            .attr("y", -5)
-            .attr("text-anchor", "middle")
-            .text("Price Bar Chart");
-        }
-      
-        function drawLocationBarChart(locations) {
-          var margin = { top: 20, right: 30, bottom: 30, left: 40 };
-          var width = 400 - margin.left - margin.right;
-          var height = 250 - margin.top - margin.bottom;
-      
-          // Create SVG element
-          var svg = d3
-            .select("#locationBarChart")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-      
-          // Define x and y scales
-          var x = d3
-            .scaleBand()
-            .domain(locations.map((_, i) => i))
-            .range([0, width])
-            .paddingInner(0.1)
-            .paddingOuter(0.5);
-      
-          var y = d3
-            .scaleLinear()
-            .domain([0, d3.max(locations)])
-            .range([height, 0]);
-      
-          // Draw the bars
-          var bars = svg
-            .selectAll(".bar")
-            .data(locations)
-            .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", (d, i) => x(i))
-            .attr("width", x.bandwidth())
-            .attr("y", (d) => y(d))
-            .attr("height", (d) => height - y(d))
-            .attr("fill", "green");
-      
-          // Add x and y axis
-          svg
-            .append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickFormat((_, i) => `Item ${i + 1}`));
-      
-          svg.append("g").call(d3.axisLeft(y));
-      
-          // Add chart title
-          svg
-            .append("text")
-            .attr("x", width / 2)
-            .attr("y", -5)
-            .attr("text-anchor", "middle")
-            .text("Location Bar Chart");
-        }
-      </script>
-
-<div id="add-record-form">
+  
+<!-- <div id="add-record-form">
       <h2 style="background: none;">Add New Record</h2>
       <form id="new-record-form">
         <label for="new-name">Name:</label>
@@ -171,8 +34,24 @@
         <button>Search</button>
         <input type="search" name="" id="search">
       </div>
+    </div> -->
+    <div id="add-record-form">
+      <h2 style="background: none;">Add New Record</h2>
+      <div id="dynamic-form"></div>
+      <div class="search">
+        <button>Search</button>
+        <input type="search" name="" id="search">
+      </div>
     </div>
+    
     <h2>Data</h2>
+    <div id="navigate">
+      <button id="refresh-button">Refresh</button>
+
+    <button onclick="getData('electronique')">Electronique</button>
+<button onclick="getData('electromenager')">Electromenager</button>
+<button onclick="getData('luminaire')">Luminaire</button>
+    </div>
     <table id="json-table"></table>
   
 
@@ -194,7 +73,16 @@
     </form>
   </div>
 
+  <script>
+    refreshButton = document.getElementById("refresh-button")
+    refreshButton.style.width='300px';
+    refreshButton.addEventListener("click", function() {
+      getData();
+    });
 
+
+  </script>
+  
   <script src="script.js"></script>
 </body>
 </html>

@@ -10,7 +10,13 @@ padding: 50px;
 h2{
   background: none;
 }
-
+#dynamic-form{
+  background: none;
+}
+#navigate{
+  display: flex;
+  gap: 60px;
+}
 #popup-container {
   display: none;
   background-color: #308cba;
