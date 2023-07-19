@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     if (role===1){
         role_user.textContent='ADMIN'
         ds.textContent="Dashboard"
-        ds.href=""
+        ds.href= "./dashboard/template/index.html";
+        
         liste.textContent="proposition Editeurs"
         image.src='shuga.jpeg'
     }
