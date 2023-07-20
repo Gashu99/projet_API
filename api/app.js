@@ -1,8 +1,7 @@
 const { Pool } = require('pg');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-
-
+const cors = require('cors');
 
 const pool = new Pool({
   user: 'fatou',
@@ -15,6 +14,8 @@ const pool = new Pool({
 const express = require('express');
 
 const app = express();
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -87,6 +88,31 @@ app.get('/', (req, res) => {
   res.end();
 });
 
+app.post("/propositions", (req, res) => {
+    const postData = req.body;
+    // Assuming the JSON file is named "propositions.json"
+    fs.readFile("propositions.json", "utf8", (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Failed to read data." });
+        }
+
+        const posts = JSON.parse(data);
+        posts.push(postData);
+
+        fs.writeFile("propositions.json", JSON.stringify(posts, null, 2), (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: "Failed to write data." });
+            }
+
+            res.json({ message: "Data posted successfully." });
+        });
+    });
+});
+
+
+
 for (let i of l) {
   // Route pour récupérer toutes les données de la catégorie
   app.get(`/${i}`, async (req, res) => {
@@ -124,7 +150,8 @@ app.post('/:category', async (req, res) => {
     
     switch (category) {
       case 'electronique':
-        const { nom, prix, imagel } = req.body;
+        const { nom, prix } = req.body;
+        const imagel = req.body.image;
         query = 'INSERT INTO electronique (nom, prix, image) VALUES ($1, $2, $3)';
         values = [nom, prix, imagel];
         break;
@@ -150,29 +177,6 @@ app.post('/:category', async (req, res) => {
   }
 });
 
-app.post("/propositions", (req, res) => {
-    const postData = req.body;
-    // Assuming the JSON file is named "propositions.json"
-    fs.readFile("propositions.json", "utf8", (err, data) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: "Failed to read data." });
-        }
-
-        const posts = JSON.parse(data);
-        posts.push(postData);
-
-        fs.writeFile("propositions.json", JSON.stringify(posts, null, 2), (err) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: "Failed to write data." });
-            }
-
-            res.json({ message: "Data posted successfully." });
-        });
-    });
-});
-
 app.put('/:category/:id', async (req, res) => {
   const category = req.params.category;
   const idColumn = idColumns[category];
@@ -183,7 +187,8 @@ app.put('/:category/:id', async (req, res) => {
     
     switch (category) {
       case 'electronique':
-        const { nom, prix, imagel } = req.body;
+        const { nom, prix } = req.body;
+        const imagel = req.body.image
         query = `UPDATE electronique SET nom = $1, prix = $2, image = $3 WHERE ${idColumn} = $4`;
         values = [nom, prix, imagel, id];
         break;

@@ -127,7 +127,8 @@ app.put('/:category/:id', async (req, res) => {
     
     switch (category) {
       case 'electronique':
-        const { nom, prix, imagel } = req.body;
+        const { nom, prix } = req.body;
+        const imagel = req.body.image;
         query = `UPDATE electronique SET nom = $1, prix = $2, image = $3 WHERE ${idColumn} = $4`;
         values = [nom, prix, imagel, id];
         break;

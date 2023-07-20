@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 const fs = require('fs');
+const cors = require('cors');
 
 const pool = new Pool({
   user: 'fatou',
@@ -14,6 +15,7 @@ const http = require('http');
 // appel de notre application express
 const app = require('./app');
 app.set('port', process.env.PORT || 3000);
+app.use(cors());
 
 const server = http.createServer(app)
 
