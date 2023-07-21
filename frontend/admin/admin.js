@@ -29,20 +29,20 @@ addEventListeners('getDataLuminaire', 'Dall Diamm Luminaire - ADMIN', '#ff00fb')
 // Define the field name mapping for each endpoint
 const fieldNamesMap = {
   electronique: {
-    id:'id_e',
+    id: 'id_e',
     name: 'nom',
     price: 'prix',
     imageUrl: 'image' // Example: If 'image' is the field name in the API response, and 'image_url' is the field name in the form
   },
   electromenager: {
-    id:'id_ap',
+    id: 'id_ap',
     name: 'nom_ap',
     location: 'emp_ap',
     price: 'prix_ap',
     imageUrl: 'img_ap' // Example: If 'img_ap' is the field name in the API response, and 'image' is the field name in the form
   },
   luminaire: {
-    id:'id_l',
+    id: 'id_l',
     name: 'nom_l',
     description: 'description',
     price: 'prix_l',
@@ -53,15 +53,25 @@ const propositionsButton = document.getElementById('propositionsButton');
 const propositionsSection = document.getElementById('propositionsSection');
 
 propositionsButton.addEventListener('click', async () => {
-  if (propositionsSection.style.display === 'none') {
+  if (propositionsSection.style.display === 'none' || propositionsSection.style.display === '') {
     await getPropositionsData();
     propositionsSection.style.display = 'block'; // show the section
+    propositionsButton.style.animation = 'mymove 1s';
+    propositionsSection.style.animation = 'mymove3 1s'; // animate the section to appear smoothly from the left
+    propositionsButton.style.left = '350px';
   } else {
-    propositionsSection.style.display = 'none'; // hide the section
+    propositionsButton.style.animation = 'mymove2 1s'; // animate the section to disappear smoothly to the left
+    propositionsSection.style.animation = 'mymove4 1s';
+    propositionsButton.style.left = '60px';
+    setTimeout(() => {
+      propositionsSection.style.display = 'none'; // hide the section
+    }, 1000); // delay hiding the section to allow for the animation to complete
   }
 });
 
+
 async function getPropositionsData() {
+
   try {
     const response = await fetch(url + 'propositions');
     if (!response.ok) {
@@ -71,17 +81,28 @@ async function getPropositionsData() {
 
     // Clear previous content
     propositionsSection.innerHTML = "";
+    const ptitle= document.createElement('h1');
+    ptitle.innerText='Propositions';
+    propositionsSection.appendChild(ptitle); // Fixed: append the created element, not a string
 
     // Iterate over each proposition
     propositionsData.forEach(proposition => {
       // Create a div for each proposition
       const propositionDiv = document.createElement('div');
-      propositionDiv.textContent = JSON.stringify(proposition, null, 2);
+
+      // Loop through the keys and values of the proposition
+      for (const [key, value] of Object.entries(proposition)) {
+
+        propositionDiv.textContent += `${key}: ${value} `;
+        // propositionDiv.innerHTML += `<br>`;
+      }
 
       // Create update button
       const updateButton = document.createElement('button');
       updateButton.textContent = 'Update';
       updateButton.addEventListener('click', () => {
+
+
         // Determine which endpoint to send the PUT request to
         let endpoint;
         if (proposition.id_e) {
@@ -100,7 +121,7 @@ async function getPropositionsData() {
 
       // Append update button to the proposition div
       propositionDiv.appendChild(updateButton);
-
+      propositionDiv.classList.add('propositionDiv');
       // Create delete button
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Delete';
@@ -134,8 +155,6 @@ async function getPropositionsData() {
 }
 
 
-
-
 async function getData(endpoint) {
   try {
     const response = await fetch(url + endpoint);
@@ -150,6 +169,7 @@ async function getData(endpoint) {
     // Create the table element
     const tableEl = document.getElementById("json-table");
     tableEl.innerHTML = ""; // Clear previous table content
+    tableEl.style.width = '100%'; // Set fixed width for the table
 
     // Create the table header row
     const headerRow = tableEl.insertRow();
@@ -185,6 +205,7 @@ async function getData(endpoint) {
         const popupContainer = document.getElementById("popup-container");
         popupContainer.style.display = "block";
         popupContainer.style.backgroundColor = '#308cba';
+        popupContainer.style.animation= 'appear 1s' ;
 
         // Pre-fill the form fields with existing data
         const modifyForm = document.getElementById("modify-form");
@@ -212,7 +233,7 @@ async function getData(endpoint) {
         // Add an event listener to the form to handle form submission
         modifyForm.addEventListener("submit", async (event) => {
           event.preventDefault();
-
+          modifyForm.style.animation= 'appear 1s' ;
           const formData = new FormData(modifyForm);
           const updatedData = {};
           for (const key of formData.keys()) {
@@ -228,7 +249,12 @@ async function getData(endpoint) {
             console.error(error);
           } finally {
             // Hide the popup after form submission
-            popupContainer.style.display = "none";
+            popupContainer.style.animation= 'disappear 1s' ;
+            
+            setTimeout(() => {
+              popupContainer.style.display = "none";
+            }, 1000);
+
           }
         });
       });
@@ -260,13 +286,13 @@ getData('electromenager')
 
 
 function sendPostRequest(endpoint, postData) {
-    fetch(`http://localhost:3000/${endpoint}`, {
+  fetch(`http://localhost:3000/${endpoint}`, {
     method: 'POST',
     body: JSON.stringify(postData),
     headers: {
-        'Content-Type': 'application/json; charset=UTF-8'
+      'Content-Type': 'application/json; charset=UTF-8'
     }
-    })
+  })
     .then((response) => response.json())
     .then((json) => console.log(json))
     .catch((error) => console.error(error)).finally(() => {
@@ -325,22 +351,22 @@ function createDynamicForm(endpoint) {
     dynamicForm.appendChild(form);
 
     for (const fieldName in fieldNamesMap[endpoint]) {
-      if (fieldName!== "id"){
+      if (fieldName !== "id") {
         const label = document.createElement("label");
         label.for = `new-${fieldName}`;
-        label.textContent = fieldNamesMap[endpoint][fieldName].charAt(0).toUpperCase() + fieldNamesMap[endpoint][fieldName].slice(1) + ":"; 
-  
+        label.textContent = fieldNamesMap[endpoint][fieldName].charAt(0).toUpperCase() + fieldNamesMap[endpoint][fieldName].slice(1) + ":";
+
         const input = document.createElement("input");
         input.type = "text";
         input.id = `new-${fieldName}`;
         input.name = `new-${fieldName}`;
         input.required = true;
-  
+
         form.appendChild(label);
         form.appendChild(input);
       }
     }
-    if (endpoint === "electronique"){
+    if (endpoint === "electronique") {
       const label = document.createElement("label")
       const span = document.createElement("span");
       form.appendChild(label);
@@ -388,20 +414,20 @@ function createDynamicForm(endpoint) {
 
 
 function sendPutRequest(endpoint, idToUpdate, updatedData) {
-    fetch(`http://localhost:3000/${endpoint}/${idToUpdate}`, {
-      method: 'PUT',
-      body: JSON.stringify(updatedData),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8'
-      }
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json))
-      .catch((error) => console.error(error)).finally(() => {
-        // Fetch updated data after the DELETE request is completed
-        getData(endpoint)
-      });
-  }
+  fetch(`http://localhost:3000/${endpoint}/${idToUpdate}`, {
+    method: 'PUT',
+    body: JSON.stringify(updatedData),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+    }
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json))
+    .catch((error) => console.error(error)).finally(() => {
+      // Fetch updated data after the DELETE request is completed
+      getData(endpoint)
+    });
+}
 
 
 function sendDeleteRequest(endpoint, id) {
@@ -418,7 +444,7 @@ function sendDeleteRequest(endpoint, id) {
       .catch((error) => console.error(error))
       .finally(() => {
         // Fetch updated data after the DELETE request is completed
-      getData(endpoint)
+        getData(endpoint)
       });
   } else {
     // Cancel the delete request if not confirmed

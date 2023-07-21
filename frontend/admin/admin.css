@@ -170,6 +170,7 @@ tr{
   border: none;
   background: none;
   border-radius: 10px;
+  width: 1000px;
 }
 table > tbody > tr > td {
   border: 11px solid #000;
@@ -206,6 +207,55 @@ label{
   background: none;
 }
 
+#propositionsButton{
+  width: 300px;
+  left: 60px;
+  position: absolute;
+}
+
+@keyframes mymove {
+  from {left: 60px;}
+  to {left: 350px;}
+}
+@keyframes appear {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes disappear {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+
+@keyframes mymove2 {
+  from {left: 350px;}
+  to {left: 60px;}
+}
+
+@keyframes mymove3 {
+  from {left: -300px;}
+  to {left: 0px;}
+}
+
+@keyframes mymove4 {
+  from {left: 0px;}
+  to {left: -300px;}
+}
+
+
+
+
+.propositionDiv{
+  border: 20px solid #308cba;
+  border-radius: 100px;
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
 #search{
   margin-left: 30px;
 }
@@ -218,11 +268,15 @@ label{
 }
 .search > input{
   width: 190px;
-height: 50px;
+  height: 50px;
+  padding-left: 20px;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 #add-record-form-button {
   width: 245px;
+  margin-left: 70px;
 }
 
 .dakar {
