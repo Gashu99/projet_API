@@ -6,43 +6,23 @@ function sortDataById(jsonData, endpoint) {
 }
 
 const titre = document.getElementById('titre')
-const getDataElectronique = document.getElementById('getDataElectronique')
-getDataElectronique.addEventListener('click', () => {
-  titre.innerText = 'Dall Diamm Electronique - ADMIN'
-});
-getDataElectronique.addEventListener('mouseover', () => {
-      getDataElectronique.style.backgroundColor = '#5e2598'
-    });
-getDataElectronique.addEventListener('mouseout', () => {
-      getDataElectronique.style.backgroundColor = 'white'
-    });
 
+function addEventListeners(buttonId, titleText, backgroundColor) {
+  const button = document.getElementById(buttonId);
+  button.addEventListener('click', () => {
+    titre.innerText = titleText;
+  });
+  button.addEventListener('mouseover', () => {
+    button.style.backgroundColor = backgroundColor;
+  });
+  button.addEventListener('mouseout', () => {
+    button.style.backgroundColor = 'white';
+  });
+}
 
-
-const getDataElectromenager = document.getElementById('getDataElectromenager')
-getDataElectromenager.addEventListener('click', () => {
-  titre.innerText = 'Dall Diamm Electromenager - ADMIN'
-});
-getDataElectromenager.addEventListener('mouseover', () => {
-      getDataElectromenager.style.backgroundColor = '#1316ed'
-    });
-getDataElectromenager.addEventListener('mouseout', () => {
-      getDataElectromenager.style.backgroundColor = 'white'
-    });
-
-
-
-const getDataLuminaire = document.getElementById('getDataLuminaire')
-getDataLuminaire.addEventListener('click', () => {
-  titre.innerText = 'Dall Diamm Luminaire - ADMIN'
-});
-getDataLuminaire.addEventListener('mouseover', () => {
-      getDataLuminaire.style.backgroundColor = '#ff00fb'
-    });
-getDataLuminaire.addEventListener('mouseout', () => {
-      getDataLuminaire.style.backgroundColor = 'white'
-    });
-
+addEventListeners('getDataElectronique', 'Dall Diamm Electronique - ADMIN', '#5e2598');
+addEventListeners('getDataElectromenager', 'Dall Diamm Electromenager - ADMIN', '#1316ed');
+addEventListeners('getDataLuminaire', 'Dall Diamm Luminaire - ADMIN', '#ff00fb');
 
 
 
@@ -69,6 +49,92 @@ const fieldNamesMap = {
     imageUrl: 'image' // Example: If 'image' is the field name in the API response, and 'image' is the field name in the form
   }
 };
+const propositionsButton = document.getElementById('propositionsButton');
+const propositionsSection = document.getElementById('propositionsSection');
+
+propositionsButton.addEventListener('click', async () => {
+  if (propositionsSection.style.display === 'none') {
+    await getPropositionsData();
+    propositionsSection.style.display = 'block'; // show the section
+  } else {
+    propositionsSection.style.display = 'none'; // hide the section
+  }
+});
+
+async function getPropositionsData() {
+  try {
+    const response = await fetch(url + 'propositions');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const propositionsData = await response.json();
+
+    // Clear previous content
+    propositionsSection.innerHTML = "";
+
+    // Iterate over each proposition
+    propositionsData.forEach(proposition => {
+      // Create a div for each proposition
+      const propositionDiv = document.createElement('div');
+      propositionDiv.textContent = JSON.stringify(proposition, null, 2);
+
+      // Create update button
+      const updateButton = document.createElement('button');
+      updateButton.textContent = 'Update';
+      updateButton.addEventListener('click', () => {
+        // Determine which endpoint to send the PUT request to
+        let endpoint;
+        if (proposition.id_e) {
+          endpoint = 'electronique';
+        } else if (proposition.id_ap) {
+          endpoint = 'electromenager';
+        } else if (proposition.id_l) {
+          endpoint = 'luminaire';
+        }
+
+        // Send the PUT request to the determined endpoint
+        if (endpoint) {
+          sendPutRequest(endpoint, proposition[fieldNamesMap[endpoint].id], proposition);
+        }
+      });
+
+      // Append update button to the proposition div
+      propositionDiv.appendChild(updateButton);
+
+      // Create delete button
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.addEventListener('click', () => {
+        // Determine which endpoint to send the DELETE request to
+        let endpoint;
+        if (proposition.id_e) {
+          endpoint = 'electronique';
+        } else if (proposition.id_ap) {
+          endpoint = 'electromenager';
+        } else if (proposition.id_l) {
+          endpoint = 'luminaire';
+        }
+
+        // Send the DELETE request to the determined endpoint
+        if (endpoint) {
+          sendDeleteRequest(endpoint, proposition[fieldNamesMap[endpoint].id]);
+        }
+      });
+
+
+      // Append delete button to the proposition div
+      propositionDiv.appendChild(deleteButton);
+
+      // Append the proposition div to the propositions section
+      propositionsSection.appendChild(propositionDiv);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+
 
 async function getData(endpoint) {
   try {
@@ -208,6 +274,44 @@ function sendPostRequest(endpoint, postData) {
       getData(endpoint)
     });
 }
+// Create search bar
+// Create search bar
+const searchBar = document.getElementById('search-bar');
+searchBar.type = 'text';
+searchBar.placeholder = 'Search...';
+// document.body.insertBefore(searchBar, document.body.firstChild);
+
+// Add event listener to the search bar
+searchBar.addEventListener('keyup', async (event) => {
+  const searchValue = event.target.value.toLowerCase();
+
+  // Get data from the table
+  const tableEl = document.getElementById("json-table");
+  const rows = Array.from(tableEl.rows);
+
+  // Filter the data based on the search value
+  const filteredRows = rows.filter(row => {
+    for (const cell of row.cells) {
+      if (cell.textContent.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+    }
+    return false;
+  });
+
+  // Clear the table content
+  tableEl.innerHTML = "";
+
+  // Populate the table with the filtered data
+  for (const row of filteredRows) {
+    const newRow = tableEl.insertRow();
+
+    for (const cell of row.cells) {
+      const newCell = newRow.insertCell();
+      newCell.textContent = cell.textContent;
+    }
+  }
+});
 
 
 function createDynamicForm(endpoint) {

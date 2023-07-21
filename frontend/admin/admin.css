@@ -1,11 +1,23 @@
 *{
   background-color: rgb(0, 0, 0);
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 body{
   background-image:url("https://bitsum.com/wp-content/uploads/dark-background-images-5561-5821-hd-wallpapers.jpg") ;
+  padding: 50px;
+}
 
-padding: 50px;
+#propositionsSection {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 300px; /* adjust as needed */
+  height: 100vh; /* full viewport height */
+  overflow: auto; /* add scroll if content overflows */
+  display: none; /* initially hidden */
+  /* add other styles as needed (background, padding, etc.) */
+  background-color: rgba(0, 0, 0, 0.7);
+  border-right: #27e5cc;
 }
 h2{
   background: none;
@@ -25,15 +37,10 @@ h2{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
-  background-color: #bdc8f4;
-  border-radius: 90px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 100px;
 }
-
 
 .charts{
 display: flex;
@@ -42,8 +49,6 @@ background-color: rgb(255, 255, 255);
 max-width: 1171px;
 }
 
-
-
 #pieChart {    
   position:relative;
   top:10px;
@@ -51,8 +56,6 @@ max-width: 1171px;
   width:400px;
   height: 400px; 
 }
-
-
 
 #lineChart {    
   position:relative;
@@ -77,7 +80,7 @@ label{
    font-family: Verdana;
    fill: white;
    font-weight: bold;	
-      } 
+}
 
 /*for line chart*/
 .axis path, .axis line {
@@ -88,18 +91,14 @@ label{
 
 .line {
   fill: none;
-  /*stroke: steelblue;*/
   stroke-width: 3px;
 }
 
 .dot {
-  /*fill: white;*/
-  /*stroke: steelblue;*/
   stroke-width: 1.5px;
-  }
-        
-#titre{
+}
 
+#titre{
   background: none;
 }
 
@@ -111,7 +110,6 @@ label{
 .title {
    font-family: Verdana;
     font-size: 15px;	
-    
 }
 
 .xAxis {
@@ -126,7 +124,6 @@ label{
     fill: white;
 }
 
-  
 table {
   border-collapse:collapse;
   border: 0px;	
@@ -157,15 +154,11 @@ td {
   fill       : grey;
   text-anchor: middle;
   font-weight: bold;
-  /*font-style: italic;*/
 }
-    
-
 
 *{
   font-family: sans-serif;
   color: white;
-  /* background-color: #28477c; */
 }
 
 ul{
@@ -230,13 +223,7 @@ height: 50px;
 
 #add-record-form-button {
   width: 245px;
-  
-
 }
-/* 
-body{
-  backdrop-filter: blur(1px)
-} */
 
 .dakar {
 font-size: 47px;
@@ -245,7 +232,6 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 18px;
-  
 }
 
 #gif{
@@ -277,7 +263,6 @@ box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 transition: all 0.3s ease 0s;
 cursor: pointer;
 outline: none;
-
 padding: 12px;
 }
 
@@ -289,8 +274,7 @@ transform: translateY(-7px);
 }
 
 #add-record-form-button:hover{
-
-box-shadow: yellow;
+box-shadow: none
 }
 #modify-form{
   display: grid;
@@ -313,7 +297,6 @@ box-shadow: yellow;
   font-weight: bold;
 }
 
-
 .body{
   display: flex;
   flex-direction: column;
@@ -328,7 +311,6 @@ box-shadow: yellow;
 .links>a{
   color: #ff0;
 }
-
 
 .containslist{
   display: flex;
@@ -345,7 +327,6 @@ box-shadow: yellow;
   top: 0;
   left: 0;
 }
-
 
 #carrapide{
   z-index: 1000;
@@ -367,7 +348,6 @@ ul>li>ol{
   gap: 5px;
   width: 100%;
 }
-
 
 ol{
   display: flex;
@@ -391,3 +371,4 @@ li{
   box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
   color: white;
 }
+
