@@ -1,20 +1,33 @@
 async function getProductsDataelectronique() {
+
+  
+  let i=0;
     try {
       const response = await fetch('http://localhost:3000/electronique');
       const data = await response.json();
   
       const swiperSlides = document.querySelectorAll('.swiper-slide');
-  
+      
+ 
       data.forEach((item, index) => {
         const swiperSlide = swiperSlides[index];
-  
+        const editButton = swiperSlide.querySelector('.btn');
+        editButton.addEventListener('click',()=> {
+          const data = {'nom':item.nom,
+          'prix':item.prix,
+          'image':item.image,
+          'id_e':item.id_e }
+          
+          localStorage.setItem('data',JSON.stringify(data))
+        })
         const productName = swiperSlide.querySelector('h3');
         const price = swiperSlide.querySelector('.price');
         const image = swiperSlide.querySelector('img');
-  
+  // console.log(item)
         productName.textContent = item.nom;
-        price.textContent = `$${item.prix} `;
+        price.textContent = `${item.prix} `;
         image.src = item.image;
+
       });
   
     } catch (error) {
@@ -39,7 +52,7 @@ async function getProductsDataelectronique() {
         const image = swiperSlide.querySelector('img');
   
         productName.textContent = item.nom_ap;
-        price.textContent = `$${item.prix_ap} `;
+        price.textContent = `${item.prix_ap} `;
         image.src = item.img_ap;
       });
   
@@ -210,4 +223,5 @@ var swiper = new Swiper(".review-slider", {
         },
     },
 });
+
 

@@ -42,11 +42,47 @@ document.addEventListener('DOMContentLoaded', function(event) {
         ds.href= "../dashboard/template/index.html";
         
         liste.textContent="proposition Editeurs"
+        liste.href= "admin.html";
         image.src='shuga.jpeg'
     }
     if (role===2){
         role_user.textContent='EDITEUR'
+        image.src='aby.jpeg'
+
         ds.textContent="liste des produits edités "
+       
+
+
+         // Récupérer toutes les balises <a> ayant la classe "edit-link" et contenant le texte "Edit"
+          const editLinks = document.querySelectorAll('#btn_edit');
+          console.log(editLinks)
+
+
+        // Parcourir les balises récupérées et faire quelque chose avec chacune d'elles
+         editLinks.forEach(link => {
+        // Faites ce que vous voulez avec chaque balise <a> ayant la valeur "Edit"
+        link.addEventListener("click",function(event){
+          event.preventDefault(); 
+         
+          // link.setAttribute('href','editer.html')
+          
+        
+      const data = JSON.parse(localStorage.getItem('data') )
+
+         
+          // Remplir les champs du formulaire avec les informations récupérées
+          const nomInput = document.getElementById('nom');
+          const prixInput = document.getElementById('prix');
+          const imageInput = document.getElementById('image');
+          nomInput.value=data['nom'];
+          prixInput.value =data['prix'];
+          imageInput.value = data['image'];
+
+
+          window.location.href = 'editer.html';
+})
+      });
+
     }
     
   

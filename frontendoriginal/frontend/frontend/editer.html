@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestion des modifications</title>
+  <link rel="stylesheet"  href="css/styleedit.css">
+</head>
+<body>
+  <h1>Gestion des modifications</h1>
+  <form id="modification-form">
+    <div>
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="nom" required>
+    </div>
+    <div>
+      <label for="prix">Prix :</label>
+      <input type="number" id="prix" name="prix" required>
+    </div>
+    <div>
+      <label for="image">Image :</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+    </div>
+    <div>
+      <button type="submit">Enregistrer les modifications</button>
+    </div>
+  </form>
+</body>
+<script src="js/user_info.js"></script>
+</html>

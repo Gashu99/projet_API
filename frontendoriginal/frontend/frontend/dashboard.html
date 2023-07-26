@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard avec D3.js</title>
+  <link rel="stylesheet" href="css/styledash.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <div class="charts">
+    <div id="category-bar-chart"></div>
+    <div id="category-pie-chart"></div>
+    <div id="user-bar-chart"></div>
+  </div>
+
+  <script>
+    // Données simulées pour le nombre d'éléments dans chaque catégorie
+    const categoryData = [
+      { category: 'Électronique', count: 50 },
+      { category: 'Électroménager', count: 30 },
+      { category: 'Luminaire', count: 20 }
+    ];
+
+    // Données simulées pour le nombre d'utilisateurs dans la base de données
+    const userData = [
+      { role: 'Admin', count: 5 },
+      { role: 'Utilisateur', count: 20 },
+      { role: 'Invité', count: 10 }
+    ];
+
+    // Créer le graphique en barres pour le nombre d'éléments dans chaque catégorie
+    const categoryBarChart = d3.select("#category-bar-chart");
+    const categoryBarWidth = 400;
+    const categoryBarHeight = 300;
+    const categoryBarMargin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const categoryBarX = d3.scaleBand().range([0, categoryBarWidth]).padding(0.1);
+    const categoryBarY = d3.scaleLinear().range([categoryBarHeight, 0]);
+    categoryBarX.domain(categoryData.map(d => d.category));
+    categoryBarY.domain([0, d3.max(categoryData, d => d.count)]);
+    const categoryBarSvg = categoryBarChart.append("svg")
+      .attr("width", categoryBarWidth + categoryBarMargin.left + categoryBarMargin.right)
+      .attr("height", categoryBarHeight + categoryBarMargin.top + categoryBarMargin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + categoryBarMargin.left + "," + categoryBarMargin.top + ")");
+    categoryBarSvg.selectAll(".bar")
+      .data(categoryData)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", d => categoryBarX(d.category))
+      .attr("width", categoryBarX.bandwidth())
+      .attr("y", d => categoryBarY(d.count))
+      .attr("height", d => categoryBarHeight - categoryBarY(d.count));
+
+    // Créer le graphique à secteurs pour le nombre d'éléments dans chaque catégorie
+    const categoryPieChart = d3.select("#category-pie-chart");
+    const categoryPieWidth = 300;
+    const categoryPieHeight = 300;
+    const categoryPieRadius = Math.min(categoryPieWidth, categoryPieHeight) / 2;
+    const categoryPieSvg = categoryPieChart.append("svg")
+      .attr("width", categoryPieWidth)
+      .attr("height", categoryPieHeight)
+      .append("g")
+      .attr("transform", "translate(" + categoryPieWidth / 2 + "," + categoryPieHeight / 2 + ")");
+    const categoryPie = d3.pie().value(d => d.count);
+    const categoryPieColor = d3.scaleOrdinal().range(d3.schemeCategory10);
+    const categoryPieArc = d3.arc().outerRadius(categoryPieRadius).innerRadius(0);
+    const categoryPieChartG = categoryPieSvg.selectAll(".arc")
+      .data(categoryPie(categoryData))
+      .enter().append("g")
+      .attr("class", "arc");
+    categoryPieChartG.append("path")
+      .attr("d", categoryPieArc)
+      .attr("fill", d => categoryPieColor(d.data.category));
+    categoryPieChartG.append("text")
+      .attr("transform", d => "translate(" + categoryPieArc.centroid(d) + ")")
+      .attr("dy", "0.35em")
+      .text(d => d.data.category);
+
+    // Créer le graphique en barres pour le nombre d'utilisateurs dans la base de données
+    const userBarChart = d3.select("#user-bar-chart");
+    const userBarWidth = 300;
+    const userBarHeight = 200;
+    const userBarMargin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const userBarX = d3.scaleBand().range([0, userBarWidth]).padding(0.1);
+    const userBarY = d3.scaleLinear().range([userBarHeight, 0]);
+    userBarX.domain(userData.map(d => d.role));
+    userBarY.domain([0, d3.max(userData, d => d.count)]);
+    const userBarSvg = userBarChart.append("svg")
+      .attr("width", userBarWidth + userBarMargin.left + userBarMargin.right)
+      .attr("height", userBarHeight + userBarMargin.top + userBarMargin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + userBarMargin.left + "," + userBarMargin.top + ")");
+    userBarSvg.selectAll(".bar")
+      .data(userData)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", d => userBarX(d.role))
+      .attr("width", userBarX.bandwidth())
+      .attr("y", d => userBarY(d.count))
+      .attr("height", d => userBarHeight - userBarY(d.count));
+
+  </script>
+</body>
+</html>

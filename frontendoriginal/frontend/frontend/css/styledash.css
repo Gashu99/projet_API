@@ -1,0 +1,44 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.charts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#category-bar-chart,
+#category-pie-chart,
+#user-bar-chart {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+.bar {
+  fill: orange;
+}
+
+.arc text {
+  font-size: 14px;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+/* Styles pour les autres éléments du dashboard (à personnaliser selon vos besoins) */
+
